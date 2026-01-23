@@ -16,6 +16,8 @@ def setup(py_params: dict):
     FE_IF = py_params.get("fe_if", "IOb")
     # Backend interface type
     BE_IF = py_params.get("be_if", "AXI4")
+    # Write policy: 0 for write-through, 1 for write-back
+    WRITE_POL = py_params.get("write_pol", 0)
     # Use cache controller
     USE_CTRL = py_params.get("use_ctrl", 0)
     # Name of generated cache's verilog. We may use multiple names to generate caches with different configurations.
@@ -148,8 +150,10 @@ def setup(py_params: dict):
             "max": "8",
         },
         {
-            "name": "NLINES_W",
-            "descr": "Line offset width (log2): the value of this parameter equals the number of cache lines, given by 2**NLINES_W.",
+            "name": "SET_INDEX_W",
+            "descr": "Width (in bits) of the cache's set index field. The number of sets in the cache is calculated as 2**SET_INDEX_W. Combined with the number of ways (NWAYS), the total number of cache lines in the cache is NWAYS*(2**SET_INDEX_W)."
+            "- For a fully associative cache, `SET_INDEX_W` is `0` (as the entire cache forms a single set). "
+            "- For a direct-mapped cache (which has `NWAYS = 1`), `SET_INDEX_W` specifies the log2 number of sets, each containing a single cache line, therefore is also equivalent to the log2 total number of cache lines.",
             "type": "P",
             "val": "7",
             "min": "",
@@ -183,7 +187,7 @@ def setup(py_params: dict):
             "name": "WRITE_POL",
             "descr": "Write policy: set to 0 for write-through or set to 1 for write-back.",
             "type": "P",
-            "val": "0 ",
+            "val": WRITE_POL,
             "min": "0",
             "max": "1",
         },
@@ -565,7 +569,7 @@ def setup(py_params: dict):
                 "FE_DATA_W": "FE_DATA_W",
                 "BE_DATA_W": "BE_DATA_W",
                 "NWAYS_W": "NWAYS_W",
-                "NLINES_W": "NLINES_W",
+                "SET_INDEX_W": "SET_INDEX_W",
                 "WORD_OFFSET_W": "WORD_OFFSET_W",
                 "WTBUF_DEPTH_W": "WTBUF_DEPTH_W",
                 "REP_POLICY": "REP_POLICY",

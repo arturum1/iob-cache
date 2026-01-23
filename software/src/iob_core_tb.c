@@ -190,7 +190,7 @@ int iob_core_tb() {
   failed += data_test();
   failed += address_test();
 
-  failed += lru_test(IOB_CACHE_CSRS_NWAYS_W, IOB_CACHE_CSRS_NLINES_W);
+  failed += lru_test(IOB_CACHE_CSRS_NWAYS_W, IOB_CACHE_CSRS_SET_INDEX_W);
 
   failed += ctrl_test();
 
