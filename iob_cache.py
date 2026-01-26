@@ -18,6 +18,8 @@ def setup(py_params: dict):
     BE_IF = py_params.get("be_if", "AXI4")
     # Write policy: 0 for write-through, 1 for write-back
     WRITE_POL = py_params.get("write_pol", 0)
+    # Number of cache ways (log2)
+    NWAYS_W = py_params.get("nways_w", 1)
     # Use cache controller
     USE_CTRL = py_params.get("use_ctrl", 0)
     # Name of generated cache's verilog. We may use multiple names to generate caches with different configurations.
@@ -145,7 +147,7 @@ def setup(py_params: dict):
             "name": "NWAYS_W",
             "descr": "Number of cache ways (log2): the miminum is 0 for a directly mapped cache; the default is 1 for a two-way cache; the maximum is limited by the desired maximum operating frequency, which degrades with the number of ways. ",
             "type": "P",
-            "val": "1",
+            "val": NWAYS_W,
             "min": "0",
             "max": "8",
         },
@@ -161,7 +163,7 @@ def setup(py_params: dict):
         },
         {
             "name": "WORD_OFFSET_W",
-            "descr": "Word offset width (log2):  the value of this parameter equals the number of words per line, which is 2**OFFSET_W. ",
+            "descr": "Word offset width (log2):  the value of this parameter specifies the number of words per line, which is 2**WORD_OFFSET_W. ",
             "type": "P",
             "val": "3",
             "min": "1",
