@@ -1,7 +1,7 @@
 <!--
-SPDX-FileCopyrightText: 2024 IObundle
+SPDX-FileCopyrightText: 2026 IObundle
 
-SPDX-License-Identifier: MIT
+SPDX-License-Identifier: GPL-3.0-only
 -->
 
 # IOb-cache
@@ -13,6 +13,8 @@ IOb-cache supports pipeline architectures, allowing one request per clock cycle 
 IOb-cache has both Native `IOb` (pipelined) and `AXI4` back-end interfaces.
 The Write Policy is configurable: either write-through/not-allocate or write-back/allocate.
 The configuration supports the number of ways, address width, cache's word size (front-end data width), the memory's word size (back-end data width), the number of lines and words per line, replacement policy (if set associative), and cache-control module (allows performance measurement, cache invalidation, and write-through buffer status).
+
+An AI generated wiki for iob-cache is available [here](https://deepwiki.com/IObundle/iob-cache)
 
 
 ## Setup using Py2hwsw
